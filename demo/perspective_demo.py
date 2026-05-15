@@ -11,7 +11,7 @@ from PIL import Image
 from matplotlib import pyplot as plt
 
 
-img = Image.open(r'./perspective.jpg')
+img = Image.open(r'./demo/perspective.jpg')
 w, h = img.size
 
 fig, (asrc, anorm, afull) = plt.subplots(1, 3)
@@ -65,6 +65,8 @@ pmatrix_shift = np.array([[1, 0, -x_min],
                           [0, 0, 1]])
 # Произведение матрицы переноса и матрицы перспективы
 pmatrix_new = pmatrix_shift @ pmatrix
+
+
 
 # полная картинка
 corr = cv.warpPerspective(np.array(img), pmatrix_new, (new_w, new_h))
