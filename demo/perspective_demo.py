@@ -6,7 +6,7 @@ Created on Sun Apr 12 13:59:47 2026
 """
 
 import numpy as np
-import cv2 as cv
+import cv2
 from PIL import Image
 from matplotlib import pyplot as plt
 
@@ -38,10 +38,10 @@ hmm = 1000
 real_pointst = np.float32([[0, 0], [wmm, 0], [0, hmm], [wmm, hmm]])
 
 # Вычисление матрицы коррекции перспективы
-pmatrix = cv.getPerspectiveTransform(img_points, real_pointst)
+pmatrix = cv2.getPerspectiveTransform(img_points, real_pointst)
 
 # выпрямленная картинка в пределах угла трапеции
-cropped = cv.warpPerspective(np.array(img), pmatrix, (wmm, hmm))
+cropped = cv2.warpPerspective(np.array(img), pmatrix, (wmm, hmm))
 
 # Показать выпрямленную картинку
 anorm.imshow(cropped)
@@ -51,7 +51,7 @@ anorm.imshow(cropped)
 # Углы исходной каринки
 corners = np.float32([[0, 0], [w, 0], [0, h], [w, h]]).reshape(-1, 1, 2)
 # Положение этих точек в реальном пространстве (применяем к ним матрицу коррекции перспективы)
-t_corners = cv.perspectiveTransform(corners, pmatrix)
+t_corners = cv2.perspectiveTransform(corners, pmatrix)
 # Границы изображения в реальном пространстве
 x_min, y_min = t_corners.min(axis=0).ravel()
 x_max, y_max = t_corners.max(axis=0).ravel()
@@ -69,7 +69,7 @@ pmatrix_new = pmatrix_shift @ pmatrix
 
 
 # полная картинка
-corr = cv.warpPerspective(np.array(img), pmatrix_new, (new_w, new_h))
+corr = cv2.warpPerspective(np.array(img), pmatrix_new, (new_w, new_h))
 
 afull.imshow(corr)
 plt.show()
